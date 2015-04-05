@@ -16,20 +16,22 @@ devtools::install_github("teramonagi/RODBCDBI")
 ## Basic usage
 
 ```R
-# At first, we make a sample table using RODBC package
-channel <- odbcConnect("test")
-sqlSave(channel, USArrests)
-close(channel)
-
-# Connect to sample
 library(RODBCDBI)
+# At first, we make a sample table using RODBC package
 con <- dbConnect(RODBCDBI::ODBC(), dsn='test')
+dbListTables(con)
+dbWriteTable(con, "USArrests", USArrests)
+dbWriteTable(con, "iris", iris)
+dbListTables(con)
+
+dbListFields(con, "iris")
+dbReadTable(con, "mtcars")
 
 # You can fetch all results:
 res <- dbSendQuery(con, "SELECT * FROM USArrests")
 dbFetch(res)
 
-# Or you can get all result at one by dbGetQuery
+# Or you can get all result at once by dbGetQuery
 dbGetQuery(con, "SELECT * FROM USArrests")
 
 # Clear the result
