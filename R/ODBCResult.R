@@ -12,6 +12,15 @@ setClass(
   )
 )
 
+#' Hack its is_done property assigned in the parent environment.
+#'
+dbDone <- function(res, n, boolean) 
+{
+  name <- deparse(substitute(res, env=parent.frame(n=n-1)))
+  res@is_done <- boolean
+  assign(name, res, envir=parent.frame(n=n))  
+}
+
 #' Execute a SQL statement on a database connection
 #'
 #' To retrieve results a chunk at a time, use \code{dbSendQuery},
@@ -26,9 +35,7 @@ setClass(
 #' @rdname odbc-query
 setMethod("dbFetch", "ODBCResult", function(res, n = -1, ..., row.names = NA) {
   result <- sqlQuery(res@connection@odbc, res@sql)
-  name <- deparse(substitute(res))
-  res@is_done <- TRUE
-  assign(name, res, envir=parent.frame())
+  dbDone(res, 5, TRUE)
   result
 })
 
@@ -42,7 +49,6 @@ setMethod("dbHasCompleted", "ODBCResult", function(res, ...) {
 #' @export
 setMethod("dbClearResult", "ODBCResult", function(res, ...) {
   name <- deparse(substitute(res))
-  res@is_done <- FALSE
-  assign(name, res, envir=parent.frame())
+  dbDone(res, 5, FALSE)
   TRUE
 })

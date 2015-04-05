@@ -8,9 +8,10 @@ RODBCDBI isn't available from CRAN yet, but you can get it from github with:
 
 ```R
 # install.packages("devtools")
-# install.packages("RODBC")
+install.packages("RODBC")
 devtools::install_github("rstats-db/DBI")
 devtools::install_github("teramonagi/RODBCDBI")
+```
 
 ## Basic usage
 
