@@ -16,6 +16,7 @@ devtools::install_github("teramonagi/RODBCDBI")
 ## Basic usage
 
 ```R
+library(DBI)
 library(RODBCDBI)
 # At first, we make a sample table using RODBC package
 con <- dbConnect(RODBCDBI::ODBC(), dsn='test')
@@ -25,7 +26,7 @@ dbWriteTable(con, "iris", iris)
 dbListTables(con)
 
 dbListFields(con, "iris")
-dbReadTable(con, "mtcars")
+dbReadTable(con, "iris")
 
 # You can fetch all results:
 res <- dbSendQuery(con, "SELECT * FROM USArrests")
@@ -43,4 +44,4 @@ dbDisconnect(con)
 
 ## Acknowledgements
 
-Many thanks to Brian D. Ripley, Michael Lapsley since This package is just a wrapper of RODBC package.
+Many thanks to Brian D. Ripley, Michael Lapsley since This package is just a wrapper of [RODBC package](http://cran.r-project.org/web/packages/RODBC/index.html).

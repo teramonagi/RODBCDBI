@@ -1,10 +1,9 @@
-# Re-define RODBC class as S4
-setOldClass("RODBC")
+#' @include RODBCDBI.R
+NULL
 
 #' Class ODBCConnection.
 #'
 #' \code{ODBCConnection} objects are usually created by \code{\link[DBI]{dbConnect}}
-#' @include RODBCDBI.R
 #' @keywords internal
 #' @export
 setClass(
@@ -63,8 +62,9 @@ setMethod("dbListTables", "ODBCConnection", function(conn){
 #' dbWriteTable(con, "mtcars", mtcars)
 #' dbReadTable(con, "mtcars") 
 #' dbDisconnect(con)
-setMethod("dbWriteTable", c("ODBCConnection", "character", "data.frame"), function(conn, name, value) {
-  sqlSave(conn@odbc, dat=value, tablename=name)
+setMethod("dbWriteTable", c("ODBCConnection", "character", "data.frame"), function(conn, name, value, overwrite=FALSE, append=FALSE) {
+  sqlSave(conn@odbc, dat=value, tablename=name, safer=!overwrite, append=append)
+  
 })
 
 #' Does the table exist?
@@ -84,6 +84,49 @@ setMethod("dbExistsTable", c("ODBCConnection", "character"), function(conn, name
 #' @param name character vector of length 1 giving name of table to remove
 #' @export
 setMethod("dbRemoveTable", c("ODBCConnection", "character"), function(conn, name) {
-  sqlDrop(conn@odbc, "USArrests")
+  sqlDrop(conn@odbc, name)
   invisible(TRUE)
+})
+
+#' Convenience functions for importing/exporting DBMS tables
+#' 
+#' These functions mimic their R/S-Plus counterpart \code{get}, \code{assign},
+#' \code{exists}, \code{remove}, and \code{objects}, except that they generate
+#' code that gets remotely executed in a database engine.
+#' 
+#' @return A data.frame in the case of \code{dbReadTable}; otherwise a logical
+#' indicating whether the operation was successful.
+#' @note Note that the data.frame returned by \code{dbReadTable} only has
+#' primitive data, e.g., it does not coerce character data to factors.
+#' 
+#' @param conn a \code{\linkS4class{ODBCConnection}} object, produced by \code{\link[DBI]{dbConnect}}
+#' @param name a character string specifying a table name.
+#' @param check.names If \code{TRUE}, the default, column names will be converted to valid R identifiers.
+#' @param select.cols  A SQL statement (in the form of a character vector of 
+#'    length 1) giving the columns to select. E.g. "*" selects all columns, 
+#'    "x,y,z" selects three columns named as listed.
+#' @inheritParams DBI::rownamesToColumn
+#' @export
+#' @examples
+#' con <- dbConnect(ODBCConnection())
+#' dbWriteTable(con, "mtcars", mtcars)
+#' dbReadTable(con, "mtcars")
+#' dbGetQuery(con, "SELECT * FROM mtcars WHERE cyl = 8")
+#' 
+#' # Supress row names
+#' dbReadTable(con, "mtcars", row.names = FALSE)
+#' dbGetQuery(con, "SELECT * FROM mtcars WHERE cyl = 8", row.names = FALSE)
+#' 
+#' dbDisconnect(con)
+setMethod("dbReadTable", c("ODBCConnection", "character"), function(conn, name, row.names = NA, check.names = TRUE, select.cols = "*") {
+  out <- dbGetQuery(conn, paste("SELECT", select.cols, "FROM", name), row.names = row.names)
+  if (check.names) {
+    names(out) <- make.names(names(out), unique = TRUE)
+  }  
+  out
+})
+
+#' @export
+setMethod("dbDisconnect", "ODBCConnection", function(conn) {
+  odbcClose(conn@odbc)
 })

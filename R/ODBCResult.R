@@ -14,7 +14,7 @@ setClass(
 
 #' Hack its is_done property assigned in the parent environment.
 #'
-dbDone <- function(res, n, boolean) 
+set_as_done <- function(res, n, boolean) 
 {
   name <- deparse(substitute(res, env=parent.frame(n=n-1)))
   res@is_done <- boolean
@@ -35,7 +35,7 @@ dbDone <- function(res, n, boolean)
 #' @rdname odbc-query
 setMethod("dbFetch", "ODBCResult", function(res, n = -1, ..., row.names = NA) {
   result <- sqlQuery(res@connection@odbc, res@sql)
-  dbDone(res, 5, TRUE)
+  set_as_done(res, 5, TRUE)
   result
 })
 
@@ -49,6 +49,6 @@ setMethod("dbHasCompleted", "ODBCResult", function(res, ...) {
 #' @export
 setMethod("dbClearResult", "ODBCResult", function(res, ...) {
   name <- deparse(substitute(res))
-  dbDone(res, 5, FALSE)
+  set_as_done(res, 5, FALSE)
   TRUE
 })
