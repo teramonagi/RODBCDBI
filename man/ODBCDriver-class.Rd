@@ -3,10 +3,13 @@
 \docType{class}
 \name{ODBCDriver-class}
 \alias{ODBCDriver-class}
+\alias{dbIsValid,ODBCDriver-method}
 \alias{dbUnloadDriver,ODBCDriver-method}
 \title{ODBCDriver and methods.}
 \usage{
 \S4method{dbUnloadDriver}{ODBCDriver}(drv, ...)
+
+\S4method{dbIsValid}{ODBCDriver}(dbObj)
 }
 \description{
 ODBCDriver and methods.

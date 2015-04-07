@@ -22,11 +22,13 @@ library(RODBCDBI)
 con <- dbConnect(RODBCDBI::ODBC(), dsn='test')
 dbListTables(con)
 dbWriteTable(con, "USArrests", USArrests)
+
 dbWriteTable(con, "iris", iris)
 dbListTables(con)
 
 dbListFields(con, "iris")
 dbReadTable(con, "iris")
+dbReadTable(con, "USArrests")
 
 # You can fetch all results:
 res <- dbSendQuery(con, "SELECT * FROM USArrests")

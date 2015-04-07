@@ -52,3 +52,51 @@ setMethod("dbClearResult", "ODBCResult", function(res, ...) {
   set_as_done(res, 5, FALSE)
   TRUE
 })
+
+
+#' Database interface meta-data.
+#' 
+#' See documentation of generics for more details.
+#' 
+#' @param res An object of class \code{\linkS4class{ODBCResult}}
+#' @param ... Ignored. Needed for compatibility with generic
+#' @examples
+#' data(USArrests)
+#' con <- dbConnect(SQLite(), dbname=":memory:")
+#' dbWriteTable(con, "t1", USArrests)
+#' dbWriteTable(con, "t2", USArrests)
+#' 
+#' dbListTables(con)
+#' 
+#' rs <- dbSendQuery(con, "select * from t1 where UrbanPop >= 80")
+#' dbGetStatement(rs)
+#' dbHasCompleted(rs)
+#' 
+#' info <- dbGetInfo(rs)
+#' names(info)
+#' info$fields
+#' 
+#' dbFetch(rs, n=2)
+#' dbHasCompleted(rs)
+#' info <- dbGetInfo(rs)
+#' info$fields
+#' dbClearResult(rs)
+#' 
+#' # DBIConnection info
+#' names(dbGetInfo(con))
+#' 
+#' dbDisconnect(con)
+#' @name odbc-meta
+NULL
+
+#' @export
+#' @rdname odbc-meta
+setMethod("dbGetRowCount", "ODBCResult", function(res, ...) {
+  unlist(dbGetQuery(res@connection, "SELECT count(*) FROM iris"))
+})
+
+#' @rdname odbc-meta
+#' @export
+setMethod("dbGetStatement", "ODBCResult", function(res, ...) {
+  res@sql
+})

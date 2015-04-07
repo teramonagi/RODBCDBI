@@ -29,3 +29,7 @@ setMethod(
     new("ODBCConnection", odbc=connection)
   }
 )
+
+#' @rdname ODBCDriver-class
+#' @export
+setMethod("dbIsValid", "ODBCDriver", function(dbObj) {TRUE})

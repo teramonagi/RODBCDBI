@@ -64,7 +64,7 @@ setMethod("dbListTables", "ODBCConnection", function(conn){
 #' dbDisconnect(con)
 setMethod("dbWriteTable", c("ODBCConnection", "character", "data.frame"), function(conn, name, value, overwrite=FALSE, append=FALSE) {
   sqlSave(conn@odbc, dat=value, tablename=name, safer=!overwrite, append=append)
-  
+  invisible(TRUE)
 })
 
 #' Does the table exist?
