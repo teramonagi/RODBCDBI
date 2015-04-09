@@ -1,8 +1,12 @@
 language: c
 before_install:
-- curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-- chmod 755 ./travis-tool.sh
-- ./travis-tool.sh bootstrap
+  - mysql -e "create database IF NOT EXISTS test;" -uroot
+  - sudo apt-get install libmyodbc libsqliteodbc unixodbc unixodbc-dev
+  - sudo odbcinst -i -d -f /usr/share/libmyodbc/odbcinst.ini
+  - sudo odbcinst -i -s -l -f ./tests/travis_odbc.ini
+  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
+  - chmod 755 ./travis-tool.sh
+  - ./travis-tool.sh bootstrap
 install:
   - ./travis-tool.sh r_binary_install knitr
   - ./travis-tool.sh github_package rstats-db/DBI
