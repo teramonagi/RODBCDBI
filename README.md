@@ -1,4 +1,4 @@
-# RODBCDBI
+# RODBCDBI [![Build status](https://ci.appveyor.com/api/projects/status/3h11jwc1v7l7nt38/branch/master?svg=true)](https://ci.appveyor.com/project/teramonagi/rodbcdbi/branch/master)
 
 RODBCDBI is an DBI-compliant interface to ODBC database. It's a wrapper of RODBC package.
 
