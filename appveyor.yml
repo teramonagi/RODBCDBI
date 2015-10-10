@@ -10,10 +10,14 @@ init:
 install:
   ps: Bootstrap
 
+services:
+  - mssql2014
+
 # Adapt as necessary starting from here
 
 build_script:
   - travis-tool.sh install_deps
+  - sqlcmd -S ".\SQL2014" -U sa -P Password12! -Q "create database test;"
 
 test_script:
   - travis-tool.sh run_tests
