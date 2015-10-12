@@ -6,7 +6,7 @@
 #' @import methods DBI
 #' @examples
 #' library(DBI)
-#' RODBCDBI::odbc()
+#' RODBCDBI::ODBC()
 ODBC <- function() {new("ODBCDriver")}
 
 #' ODBCDriver and methods.
