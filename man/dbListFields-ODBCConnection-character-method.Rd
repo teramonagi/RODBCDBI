@@ -16,8 +16,9 @@
 List fields in specified table.
 }
 \examples{
-con <- dbConnect(RODBCDBI::ODBC())
-dbWriteTable(con, "iris", iris)
+library(DBI)
+con <- dbConnect(RODBCDBI::ODBC(), dsn="test", user="sa", password="Password12!")
+dbWriteTable(con, "iris", iris, overwrite=TRUE)
 dbListFields(con, "iris")
 dbDisconnect(con)
 }

@@ -22,8 +22,9 @@ file name (character).  when \code{value} is a character, it is interpreted as a
 Write a local data frame or file to the database.
 }
 \examples{
-con <- dbConnect(RODBCDBI::ODBC())
-dbWriteTable(con, "mtcars", mtcars)
+library(DBI)
+con <- dbConnect(RODBCDBI::ODBC(), dsn="test", user="sa", password="Password12!")
+dbWriteTable(con, "mtcars", mtcars, overwrite=TRUE)
 dbReadTable(con, "mtcars")
 dbDisconnect(con)
 }

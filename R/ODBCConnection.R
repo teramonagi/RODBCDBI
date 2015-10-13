@@ -30,8 +30,9 @@ setMethod("dbGetInfo", "ODBCConnection", function(dbObj, ...) {odbcGetInfo(dbObj
 #' @param name a length 1 character vector giving the name of a table.
 #' @export
 #' @examples
-#' con <- dbConnect(RODBCDBI::ODBC())
-#' dbWriteTable(con, "iris", iris)
+#' library(DBI)
+#' con <- dbConnect(RODBCDBI::ODBC(), dsn="test", user="sa", password="Password12!")
+#' dbWriteTable(con, "iris", iris, overwrite=TRUE)
 #' dbListFields(con, "iris")
 #' dbDisconnect(con)
 setMethod("dbListFields", c("ODBCConnection", "character"), function(conn, name) {
@@ -58,8 +59,9 @@ setMethod("dbListTables", "ODBCConnection", function(conn){
 #'   file name (character).  when \code{value} is a character, it is interpreted as a file name and its contents imported to ODBC.
 #' @export
 #' @examples
-#' con <- dbConnect(RODBCDBI::ODBC())
-#' dbWriteTable(con, "mtcars", mtcars)
+#' library(DBI)
+#' con <- dbConnect(RODBCDBI::ODBC(), dsn="test", user="sa", password="Password12!")
+#' dbWriteTable(con, "mtcars", mtcars, overwrite=TRUE)
 #' dbReadTable(con, "mtcars") 
 #' dbDisconnect(con)
 setMethod("dbWriteTable", c("ODBCConnection", "character", "data.frame"), function(conn, name, value, overwrite=FALSE, append=FALSE) {
@@ -108,8 +110,9 @@ setMethod("dbRemoveTable", c("ODBCConnection", "character"), function(conn, name
 #' @inheritParams DBI::rownamesToColumn
 #' @export
 #' @examples
-#' con <- dbConnect(ODBCConnection())
-#' dbWriteTable(con, "mtcars", mtcars)
+#' library(DBI)
+#' con <- dbConnect(RODBCDBI::ODBC(), dsn="test", user="sa", password="Password12!")
+#' dbWriteTable(con, "mtcars", mtcars, overwrite=TRUE)
 #' dbReadTable(con, "mtcars")
 #' dbGetQuery(con, "SELECT * FROM mtcars WHERE cyl = 8")
 #' 

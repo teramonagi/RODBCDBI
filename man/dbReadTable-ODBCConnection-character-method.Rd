@@ -33,8 +33,9 @@ Note that the data.frame returned by \code{dbReadTable} only has
 primitive data, e.g., it does not coerce character data to factors.
 }
 \examples{
-con <- dbConnect(ODBCConnection())
-dbWriteTable(con, "mtcars", mtcars)
+library(DBI)
+con <- dbConnect(RODBCDBI::ODBC(), dsn="test", user="sa", password="Password12!")
+dbWriteTable(con, "mtcars", mtcars, overwrite=TRUE)
 dbReadTable(con, "mtcars")
 dbGetQuery(con, "SELECT * FROM mtcars WHERE cyl = 8")
 

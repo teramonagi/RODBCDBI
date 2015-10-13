@@ -2,6 +2,7 @@
 % Please edit documentation in R/ODBCResult.R
 \docType{methods}
 \name{odbc-meta}
+\alias{dbGetInfo,ODBCResult-method}
 \alias{dbGetRowCount,ODBCResult-method}
 \alias{dbGetStatement,ODBCResult-method}
 \alias{odbc-meta}
@@ -10,6 +11,8 @@
 \S4method{dbGetRowCount}{ODBCResult}(res, ...)
 
 \S4method{dbGetStatement}{ODBCResult}(res, ...)
+
+\S4method{dbGetInfo}{ODBCResult}(dbObj, ...)
 }
 \arguments{
 \item{res}{An object of class \code{\linkS4class{ODBCResult}}}
@@ -20,10 +23,11 @@
 See documentation of generics for more details.
 }
 \examples{
+library(DBI)
 data(USArrests)
-con <- dbConnect(SQLite(), dbname=":memory:")
-dbWriteTable(con, "t1", USArrests)
-dbWriteTable(con, "t2", USArrests)
+con <- dbConnect(RODBCDBI::ODBC(), dsn="test", user="sa", password="Password12!")
+dbWriteTable(con, "t1", USArrests, overwrite=TRUE)
+dbWriteTable(con, "t2", USArrests, overwrite=TRUE)
 
 dbListTables(con)
 

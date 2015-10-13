@@ -61,10 +61,11 @@ setMethod("dbClearResult", "ODBCResult", function(res, ...) {
 #' @param res An object of class \code{\linkS4class{ODBCResult}}
 #' @param ... Ignored. Needed for compatibility with generic
 #' @examples
+#' library(DBI)
 #' data(USArrests)
-#' con <- dbConnect(SQLite(), dbname=":memory:")
-#' dbWriteTable(con, "t1", USArrests)
-#' dbWriteTable(con, "t2", USArrests)
+#' con <- dbConnect(RODBCDBI::ODBC(), dsn="test", user="sa", password="Password12!")
+#' dbWriteTable(con, "t1", USArrests, overwrite=TRUE)
+#' dbWriteTable(con, "t2", USArrests, overwrite=TRUE)
 #' 
 #' dbListTables(con)
 #' 
@@ -99,4 +100,11 @@ setMethod("dbGetRowCount", "ODBCResult", function(res, ...) {
 #' @export
 setMethod("dbGetStatement", "ODBCResult", function(res, ...) {
   res@sql
+})
+
+#' @rdname odbc-meta
+#' @export
+setMethod("dbGetInfo", "ODBCResult", function(dbObj, ...) {
+  #
+  NULL
 })
