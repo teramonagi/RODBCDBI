@@ -17,8 +17,7 @@ services:
 
 build_script:
   - travis-tool.sh install_deps
-  - sqlcmd -S ".\SQL2014" -U sa -P Password12! -Q "create database db_test;"
-  - odbcconf.exe /a {CONFIGSYSDSN "SQL Server" "DSN=test|Description=test|Trusted_Connection=no|SERVER=(local)\SQL2014|Database=master"}
+  - odbcconf.exe /a {CONFIGSYSDSN "SQL Server" "DSN=test|Description=test|Trusted_Connection=no|SERVER=(local)\SQL2014"}
 test_script:
   - travis-tool.sh run_tests
 
