@@ -23,8 +23,8 @@ setMethod(
   "dbConnect", 
   "ODBCDriver", 
   function(drv, dsn, user = NULL, password = NULL, ...){
-    uid <- ifelse(is.null(user), "", user)
-    pwd <- ifelse(is.null(password), "", password)
+    uid <- if(is.null(user)) "" else user
+    pwd <- if(is.null(password)) "" else password
     connection <- odbcConnect(dsn, uid, pwd, ...)
     new("ODBCConnection", odbc=connection)
   }
