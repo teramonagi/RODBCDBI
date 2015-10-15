@@ -42,3 +42,10 @@ artifacts:
 
   - path: '\*_*.zip'
     name: Bits
+
+notifications:
+  - provider: Slack
+    auth_token:
+      secure: g/jk3Nm7fwY8+d3pnGR9S6TWXFBqVlaMRIfXsCPCTwGKZCwLxHBq7YnEMMyaO14Ttb/KtdjVQAHYSFgnVPNMnA==
+    channel: ci
+    template: "<{{buildUrl}}|Build {{projectName}} {{buildVersion}} {{status}}> Commit <{{commitUrl}}|{{commitId}}> by {{commitAuthor}} on {{commitDate}}: _{{commitMessage}}_"
