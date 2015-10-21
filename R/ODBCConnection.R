@@ -64,8 +64,8 @@ setMethod("dbListTables", "ODBCConnection", function(conn){
 #' dbWriteTable(con, "mtcars", mtcars, overwrite=TRUE)
 #' dbReadTable(con, "mtcars") 
 #' dbDisconnect(con)
-setMethod("dbWriteTable", c("ODBCConnection", "character", "data.frame"), function(conn, name, value, overwrite=FALSE, append=FALSE) {
-  sqlSave(conn@odbc, dat=value, tablename=name, safer=!overwrite, append=append)
+setMethod("dbWriteTable", c("ODBCConnection", "character", "data.frame"), function(conn, name, value, overwrite=FALSE, append=FALSE, ...) {
+  sqlSave(conn@odbc, dat=value, tablename=name, safer=!overwrite, append=append, ...)
   invisible(TRUE)
 })
 
@@ -86,7 +86,9 @@ setMethod("dbExistsTable", c("ODBCConnection", "character"), function(conn, name
 #' @param name character vector of length 1 giving name of table to remove
 #' @export
 setMethod("dbRemoveTable", c("ODBCConnection", "character"), function(conn, name) {
-  sqlDrop(conn@odbc, name)
+  if(dbExistsTable(conn, name)){
+    sqlDrop(conn@odbc, name)
+  }
   invisible(TRUE)
 })
 
@@ -131,5 +133,9 @@ setMethod("dbReadTable", c("ODBCConnection", "character"), function(conn, name, 
 
 #' @export
 setMethod("dbDisconnect", "ODBCConnection", function(conn) {
-  odbcClose(conn@odbc)
+  if (RODBC:::odbcValidChannel(conn@odbc)){
+    odbcClose(conn@odbc)
+  } else{
+    TRUE
+  }
 })

@@ -6,7 +6,7 @@
 \title{Write a local data frame or file to the database.}
 \usage{
 \S4method{dbWriteTable}{ODBCConnection,character,data.frame}(conn, name, value,
-  overwrite = FALSE, append = FALSE)
+  overwrite = FALSE, append = FALSE, ...)
 }
 \arguments{
 \item{name}{a character string specifying a table name. ODBCConnection table names
