@@ -49,3 +49,9 @@ notifications:
       secure: g/jk3Nm7fwY8+d3pnGR9S6TWXFBqVlaMRIfXsCPCTwGKZCwLxHBq7YnEMMyaO14Ttb/KtdjVQAHYSFgnVPNMnA==
     channel: ci
     template: "<{{buildUrl}}|Build {{projectName}} {{buildVersion}} {{status}}> Commit <{{commitUrl}}|{{commitId}}> by {{commitAuthor}} on {{commitDate}}: _{{commitMessage}}_"
+
+r_github_packages:
+  - jimhester/covr
+
+after_success:
+  - Rscript -e 'covr::codecov()'
