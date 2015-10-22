@@ -13,6 +13,7 @@ Imports:
     RODBC
 Suggests:
     testthat
+    covr
 Collate:
     'RODBCDBI.R'
     'ODBCConnection.R'
