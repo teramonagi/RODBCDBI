@@ -12,7 +12,7 @@ Imports:
     DBI,
     RODBC
 Suggests:
-    testthat
+    testthat,
     covr
 Collate:
     'RODBCDBI.R'
