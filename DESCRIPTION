@@ -12,12 +12,7 @@ Imports:
     DBI,
     RODBC
 Suggests:
-<<<<<<< HEAD
     testthat
-=======
-    testthat,
-    covr
->>>>>>> master
 Collate:
     'RODBCDBI.R'
     'ODBCConnection.R'
