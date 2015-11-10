@@ -16,7 +16,9 @@ setClass(
 #' @rdname odbc-query
 setMethod("dbSendQuery", "ODBCConnection", function(conn, statement, ...) {
   statement <- enc2utf8(statement)  
-  new("ODBCResult", connection=conn, sql=statement, is_done=FALSE)
+  env <- new.env()
+  assign("is_done", FALSE, envir=env)
+  new("ODBCResult", connection=conn, sql=statement, state=env)
 })
 
 #' @export
