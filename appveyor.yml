@@ -20,7 +20,7 @@ build_script:
   - c:\Windows\SysWOW64\odbcconf.exe /a {CONFIGSYSDSN "SQL Server" "DSN=test|Description=test|Trusted_Connection=no|SERVER=(local)\SQL2014"}
 test_script:
   - travis-tool.sh run_tests
-  - Rscript -e 'library(covr);codecov()'
+  - Rscript -e 'library(devtools);devtools::install_github("jimhester/covr");library(covr);codecov()'
 on_failure:
   - travis-tool.sh dump_logs
 
