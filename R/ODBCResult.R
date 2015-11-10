@@ -8,17 +8,16 @@ setClass(
   slots= list(
     connection="ODBCConnection",
     sql="character",
-    is_done="logical"
+    state="environment"
   )
 )
 
-#' Hack its is_done property assigned in the parent environment.
-#'
-set_as_done <- function(res, n, boolean) 
-{
-  name <- deparse(substitute(res, env=parent.frame(n=n-1)))
-  res@is_done <- boolean
-  assign(name, res, envir=parent.frame(n=n))  
+is_done <- function(x) {
+  x@state$is_done
+}
+`is_done<-` <- function(x, value) {
+  x@state$is_done <- value
+  x
 }
 
 #' Execute a SQL statement on a database connection
@@ -35,21 +34,22 @@ set_as_done <- function(res, n, boolean)
 #' @rdname odbc-query
 setMethod("dbFetch", "ODBCResult", function(res, n = -1, ..., row.names = NA) {
   result <- sqlQuery(res@connection@odbc, res@sql)
-  set_as_done(res, 5, TRUE)
+  res
+  is_done(res) <- TRUE
   result
 })
 
 #' @rdname odbc-query
 #' @export
 setMethod("dbHasCompleted", "ODBCResult", function(res, ...) {
-  res@is_done
+  is_done(res)
 })
 
 #' @rdname odbc-query
 #' @export
 setMethod("dbClearResult", "ODBCResult", function(res, ...) {
   name <- deparse(substitute(res))
-  set_as_done(res, 5, FALSE)
+  is_done(res) <- FALSE
   TRUE
 })
 
