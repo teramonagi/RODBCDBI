@@ -44,6 +44,14 @@ dbClearResult(res)
 dbDisconnect(con)
 ```
 
+## Contributing
+
+- Fork it ( https://github.com/teramonagi/RODBCDBI/fork )
+- Create your feature branch (git checkout -b my-new-feature)
+- Commit your changes (git commit -am 'Add some feature')
+- Push to the branch (git push origin my-new-feature)
+- Create a new Pull Request
+
 ## Acknowledgements
 
 Many thanks to Brian D. Ripley, Michael Lapsley since This package is just a wrapper of [RODBC package](http://cran.r-project.org/web/packages/RODBC/index.html).
