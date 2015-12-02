@@ -18,11 +18,14 @@
 \item{res}{An object of class \code{\linkS4class{ODBCResult}}}
 
 \item{...}{Ignored. Needed for compatibility with generic}
+
+\item{dbObj}{An object inheriting from \code{\linkS4class{ODBCConnection}}, \code{\linkS4class{ODBCDriver}}, or a \code{\linkS4class{ODBCResult}}}
 }
 \description{
 See documentation of generics for more details.
 }
 \examples{
+\dontrun{
 library(DBI)
 data(USArrests)
 con <- dbConnect(RODBCDBI::ODBC(), dsn="test", user="sa", password="Password12!")
@@ -49,5 +52,6 @@ dbClearResult(rs)
 names(dbGetInfo(con))
 
 dbDisconnect(con)
+}
 }
 

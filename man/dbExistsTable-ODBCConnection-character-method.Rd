@@ -8,7 +8,7 @@
 \S4method{dbExistsTable}{ODBCConnection,character}(conn, name)
 }
 \arguments{
-\item{conn}{An existing \code{\linkS4class{SQLiteConnection}}}
+\item{conn}{An existing \code{\linkS4class{ODBCConnection}}}
 
 \item{name}{String, name of table. Match is case insensitive.}
 }

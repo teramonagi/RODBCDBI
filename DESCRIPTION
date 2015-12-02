@@ -3,8 +3,8 @@ Type: Package
 Version: 0.1
 Title: Provides access to databases through the ODBC interface
 Author: teramonagi
-Maintainer: teramonagi <teramonagi@gmail.com>
-Description: RODBCDBI is an implementation of R's DBI interface using ODBC as a
+Maintainer: Nagi Teramo <teramonagi@gmail.com>
+Description: An implementation of R's DBI interface using ODBC package as a
     back-end. This allows R to connect to any DBMS that has a ODBC driver.
 License: BSD
 Imports:

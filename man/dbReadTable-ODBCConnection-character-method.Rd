@@ -13,6 +13,8 @@
 
 \item{name}{a character string specifying a table name.}
 
+\item{row.names}{a character string specifying a table name.}
+
 \item{check.names}{If \code{TRUE}, the default, column names will be converted to valid R identifiers.}
 
 \item{select.cols}{A SQL statement (in the form of a character vector of
@@ -33,6 +35,7 @@ Note that the data.frame returned by \code{dbReadTable} only has
 primitive data, e.g., it does not coerce character data to factors.
 }
 \examples{
+\dontrun{
 library(DBI)
 con <- dbConnect(RODBCDBI::ODBC(), dsn="test", user="sa", password="Password12!")
 dbWriteTable(con, "mtcars", mtcars, overwrite=TRUE)
@@ -44,5 +47,6 @@ dbReadTable(con, "mtcars", row.names = FALSE)
 dbGetQuery(con, "SELECT * FROM mtcars WHERE cyl = 8", row.names = FALSE)
 
 dbDisconnect(con)
+}
 }
 

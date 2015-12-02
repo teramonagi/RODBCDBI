@@ -10,7 +10,9 @@ ODBC()
 This driver never needs to be unloaded and hence \code{dbUnload()} is a null-op.
 }
 \examples{
-library(DBI)
+\dontrun{
+#' library(DBI)
 RODBCDBI::ODBC()
+}
 }
 

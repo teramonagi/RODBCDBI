@@ -12,6 +12,11 @@ setClass(
   slots=list(odbc="RODBC")
 )
 
+#' Execute a statement on a given database connection.
+#' 
+#' @param conn An existing \code{\linkS4class{ODBCConnection}}
+#' @param statement a character vector of length 1 containing SQL
+#' @param ... Other parameters passed on to methods
 #' @export
 #' @rdname odbc-query
 setMethod("dbSendQuery", "ODBCConnection", function(conn, statement, ...) {
@@ -21,22 +26,27 @@ setMethod("dbSendQuery", "ODBCConnection", function(conn, statement, ...) {
   new("ODBCResult", connection=conn, sql=statement, state=env)
 })
 
+#' Get DBMS metadata.
+#' 
+#' @param dbObj An object inheriting from \code{\linkS4class{ODBCConnection}}, \code{\linkS4class{ODBCDriver}}, or a \code{\linkS4class{ODBCResult}}
 #' @export
 #' @rdname ODBCConnection-class
-setMethod("dbGetInfo", "ODBCConnection", function(dbObj, ...) {odbcGetInfo(dbObj@odbc)})
+setMethod("dbGetInfo", "ODBCConnection", function(dbObj, ...) {dbObj(dbObj@odbc)})
 
 
 #' List fields in specified table.
 #' 
-#' @param conn An existing \code{\linkS4class{RODBCConnection}}
+#' @param conn An existing \code{\linkS4class{ODBCConnection}}
 #' @param name a length 1 character vector giving the name of a table.
 #' @export
 #' @examples
+#' \dontrun{
 #' library(DBI)
 #' con <- dbConnect(RODBCDBI::ODBC(), dsn="test", user="sa", password="Password12!")
 #' dbWriteTable(con, "iris", iris, overwrite=TRUE)
 #' dbListFields(con, "iris")
 #' dbDisconnect(con)
+#' }
 setMethod("dbListFields", c("ODBCConnection", "character"), function(conn, name) {
   sqlColumns(conn@odbc, name)$COLUMN_NAME
 })
@@ -53,19 +63,24 @@ setMethod("dbListTables", "ODBCConnection", function(conn){
 #' 
 #' @export
 #' @rdname dbWriteTable
-#' @param con,conn a \code{\linkS4class{ODBCConnection}} object, produced by \code{\link[DBI]{dbConnect}}
+#' @param conn a \code{\linkS4class{ODBCConnection}} object, produced by \code{\link[DBI]{dbConnect}}
 #' @param name a character string specifying a table name. ODBCConnection table names 
 #'   are \emph{not} case sensitive, e.g., table names \code{ABC} and \code{abc} 
 #'   are considered equal.
 #' @param value a data.frame (or coercible to data.frame) object or a 
 #'   file name (character).  when \code{value} is a character, it is interpreted as a file name and its contents imported to ODBC.
+#' @param overwrite logical. Should data be overwritten?
+#' @param append logical. Should data be appended to an existing table?
+#' @param ... additional arguments passed to the generic.
 #' @export
 #' @examples
+#' \dontrun{
 #' library(DBI)
 #' con <- dbConnect(RODBCDBI::ODBC(), dsn="test", user="sa", password="Password12!")
 #' dbWriteTable(con, "mtcars", mtcars, overwrite=TRUE)
 #' dbReadTable(con, "mtcars") 
 #' dbDisconnect(con)
+#' }
 setMethod("dbWriteTable", c("ODBCConnection", "character", "data.frame"), function(conn, name, value, overwrite=FALSE, append=FALSE, ...) {
   sqlSave(conn@odbc, dat=value, tablename=name, safer=!overwrite, append=append, ...)
   invisible(TRUE)
@@ -73,7 +88,7 @@ setMethod("dbWriteTable", c("ODBCConnection", "character", "data.frame"), functi
 
 #' Does the table exist?
 #' 
-#' @param conn An existing \code{\linkS4class{SQLiteConnection}}
+#' @param conn An existing \code{\linkS4class{ODBCConnection}}
 #' @param name String, name of table. Match is case insensitive.
 #' @export
 setMethod("dbExistsTable", c("ODBCConnection", "character"), function(conn, name) {
@@ -107,6 +122,7 @@ setMethod("dbRemoveTable", c("ODBCConnection", "character"), function(conn, name
 #' 
 #' @param conn a \code{\linkS4class{ODBCConnection}} object, produced by \code{\link[DBI]{dbConnect}}
 #' @param name a character string specifying a table name.
+#' @param row.names a character string specifying a table name.
 #' @param check.names If \code{TRUE}, the default, column names will be converted to valid R identifiers.
 #' @param select.cols  A SQL statement (in the form of a character vector of 
 #'    length 1) giving the columns to select. E.g. "*" selects all columns, 
@@ -114,6 +130,7 @@ setMethod("dbRemoveTable", c("ODBCConnection", "character"), function(conn, name
 #' @inheritParams DBI::rownamesToColumn
 #' @export
 #' @examples
+#' \dontrun{
 #' library(DBI)
 #' con <- dbConnect(RODBCDBI::ODBC(), dsn="test", user="sa", password="Password12!")
 #' dbWriteTable(con, "mtcars", mtcars, overwrite=TRUE)
@@ -125,6 +142,7 @@ setMethod("dbRemoveTable", c("ODBCConnection", "character"), function(conn, name
 #' dbGetQuery(con, "SELECT * FROM mtcars WHERE cyl = 8", row.names = FALSE)
 #' 
 #' dbDisconnect(con)
+#' }
 setMethod("dbReadTable", c("ODBCConnection", "character"), function(conn, name, row.names = NA, check.names = TRUE, select.cols = "*") {
   out <- dbGetQuery(conn, paste("SELECT", select.cols, "FROM", name), row.names = row.names)
   if (check.names) {
@@ -133,6 +151,16 @@ setMethod("dbReadTable", c("ODBCConnection", "character"), function(conn, name, 
   out
 })
 
+#' Close a current session.
+#' 
+#' @rdname dbDisconnect
+#' @param conn a \code{\linkS4class{ODBCConnection}} object, produced by \code{\link[DBI]{dbConnect}}
+#' @examples
+#' \dontrun{
+#' library(DBI)
+#' con <- dbConnect(RODBCDBI::ODBC(), dsn="test", user="sa", password="Password12!")
+#' dbDisconnect(con)
+#' }
 #' @export
 setMethod("dbDisconnect", "ODBCConnection", function(conn) {
   if (RODBC:::odbcValidChannel(conn@odbc)){

@@ -32,7 +32,7 @@ is_done <- function(x) {
 #' @inheritParams DBI::rownamesToColumn
 #' @export
 #' @rdname odbc-query
-setMethod("dbFetch", "ODBCResult", function(res, n = -1, ..., row.names = NA) {
+setMethod("dbFetch", "ODBCResult", function(res, n = -1, ...) {
   result <- sqlQuery(res@connection@odbc, res@sql)
   res
   is_done(res) <- TRUE
@@ -58,9 +58,11 @@ setMethod("dbClearResult", "ODBCResult", function(res, ...) {
 #' 
 #' See documentation of generics for more details.
 #' 
+#' @param dbObj An object inheriting from \code{\linkS4class{ODBCConnection}}, \code{\linkS4class{ODBCDriver}}, or a \code{\linkS4class{ODBCResult}}
 #' @param res An object of class \code{\linkS4class{ODBCResult}}
 #' @param ... Ignored. Needed for compatibility with generic
 #' @examples
+#' \dontrun{
 #' library(DBI)
 #' data(USArrests)
 #' con <- dbConnect(RODBCDBI::ODBC(), dsn="test", user="sa", password="Password12!")
@@ -87,11 +89,12 @@ setMethod("dbClearResult", "ODBCResult", function(res, ...) {
 #' names(dbGetInfo(con))
 #' 
 #' dbDisconnect(con)
+#' }
 #' @name odbc-meta
 NULL
 
-#' @export
 #' @rdname odbc-meta
+#' @export
 setMethod("dbGetRowCount", "ODBCResult", function(res, ...) {
   unlist(dbGetQuery(res@connection, "SELECT count(*) FROM iris"))
 })
@@ -105,6 +108,6 @@ setMethod("dbGetStatement", "ODBCResult", function(res, ...) {
 #' @rdname odbc-meta
 #' @export
 setMethod("dbGetInfo", "ODBCResult", function(dbObj, ...) {
-  #
+  # mock implementation
   NULL
 })

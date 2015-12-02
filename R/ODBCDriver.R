@@ -5,8 +5,10 @@
 #' @export
 #' @import methods DBI
 #' @examples
-#' library(DBI)
+#' \dontrun{
+#' #' library(DBI)
 #' RODBCDBI::ODBC()
+#' }
 ODBC <- function() {new("ODBCDriver")}
 
 #' ODBCDriver and methods.
