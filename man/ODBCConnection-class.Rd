@@ -8,8 +8,13 @@
 \usage{
 \S4method{dbGetInfo}{ODBCConnection}(dbObj, ...)
 }
+\arguments{
+\item{dbObj}{An object inheriting from \code{\linkS4class{ODBCConnection}}, \code{\linkS4class{ODBCDriver}}, or a \code{\linkS4class{ODBCResult}}}
+}
 \description{
 \code{ODBCConnection} objects are usually created by \code{\link[DBI]{dbConnect}}
+
+Get DBMS metadata.
 }
 \keyword{internal}
 

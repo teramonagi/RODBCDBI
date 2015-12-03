@@ -8,7 +8,7 @@
 \S4method{dbListFields}{ODBCConnection,character}(conn, name)
 }
 \arguments{
-\item{conn}{An existing \code{\linkS4class{RODBCConnection}}}
+\item{conn}{An existing \code{\linkS4class{ODBCConnection}}}
 
 \item{name}{a length 1 character vector giving the name of a table.}
 }
@@ -16,10 +16,12 @@
 List fields in specified table.
 }
 \examples{
+\dontrun{
 library(DBI)
 con <- dbConnect(RODBCDBI::ODBC(), dsn="test", user="sa", password="Password12!")
 dbWriteTable(con, "iris", iris, overwrite=TRUE)
 dbListFields(con, "iris")
 dbDisconnect(con)
+}
 }
 

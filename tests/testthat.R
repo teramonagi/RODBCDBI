@@ -1,3 +1,5 @@
 library("testthat")
 library("RODBCDBI")
-test_check("RODBCDBI")
+if (identical(Sys.getenv("NOT_CRAN"), "true")){
+  test_check("RODBCDBI")  
+}

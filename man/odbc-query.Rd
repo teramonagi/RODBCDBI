@@ -6,22 +6,30 @@
 \alias{dbFetch,ODBCResult-method}
 \alias{dbHasCompleted,ODBCResult-method}
 \alias{dbSendQuery,ODBCConnection-method}
-\title{Execute a SQL statement on a database connection}
+\title{Execute a statement on a given database connection.}
 \usage{
 \S4method{dbSendQuery}{ODBCConnection}(conn, statement, ...)
 
-\S4method{dbFetch}{ODBCResult}(res, n = -1, ..., row.names = NA)
+\S4method{dbFetch}{ODBCResult}(res, n = -1, ...)
 
 \S4method{dbHasCompleted}{ODBCResult}(res, ...)
 
 \S4method{dbClearResult}{ODBCResult}(res, ...)
 }
 \arguments{
+\item{conn}{An existing \code{\linkS4class{ODBCConnection}}}
+
+\item{statement}{a character vector of length 1 containing SQL}
+
+\item{...}{Other parameters passed on to methods}
+
 \item{res}{Code a \linkS4class{ODBCResult} produced by \code{\link[DBI]{dbSendQuery}}.}
 
 \item{n}{Number of rows to return. If less than zero returns all rows.}
 }
 \description{
+Execute a statement on a given database connection.
+
 To retrieve results a chunk at a time, use \code{dbSendQuery},
 \code{dbFetch}, then \code{ClearResult}. Alternatively, if you want all the
 results (and they'll fit in memory) use \code{dbGetQuery} which sends,

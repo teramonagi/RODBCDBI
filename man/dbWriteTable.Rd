@@ -9,6 +9,8 @@
   overwrite = FALSE, append = FALSE, ...)
 }
 \arguments{
+\item{conn}{a \code{\linkS4class{ODBCConnection}} object, produced by \code{\link[DBI]{dbConnect}}}
+
 \item{name}{a character string specifying a table name. ODBCConnection table names
 are \emph{not} case sensitive, e.g., table names \code{ABC} and \code{abc}
 are considered equal.}
@@ -16,16 +18,22 @@ are considered equal.}
 \item{value}{a data.frame (or coercible to data.frame) object or a
 file name (character).  when \code{value} is a character, it is interpreted as a file name and its contents imported to ODBC.}
 
-\item{con,conn}{a \code{\linkS4class{ODBCConnection}} object, produced by \code{\link[DBI]{dbConnect}}}
+\item{overwrite}{logical. Should data be overwritten?}
+
+\item{append}{logical. Should data be appended to an existing table?}
+
+\item{...}{additional arguments passed to the generic.}
 }
 \description{
 Write a local data frame or file to the database.
 }
 \examples{
+\dontrun{
 library(DBI)
 con <- dbConnect(RODBCDBI::ODBC(), dsn="test", user="sa", password="Password12!")
 dbWriteTable(con, "mtcars", mtcars, overwrite=TRUE)
 dbReadTable(con, "mtcars")
 dbDisconnect(con)
+}
 }
 
