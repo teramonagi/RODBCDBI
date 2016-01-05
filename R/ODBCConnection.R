@@ -14,8 +14,14 @@ setClass(
 
 #' Execute a statement on a given database connection.
 #' 
+#' To retrieve results a chunk at a time, use \code{dbSendQuery},
+#' \code{dbFetch}, then \code{ClearResult}. Alternatively, if you want all the
+#' results (and they'll fit in memory) use \code{dbGetQuery} which sends,
+#' fetches and clears for you.
+#' 
 #' @param conn An existing \code{\linkS4class{ODBCConnection}}
-#' @param statement a character vector of length 1 containing SQL
+#' @param res  An existing \code{\linkS4class{ODBCResult}}
+#' @param n The number of the record you want to extract. -1 means "all"
 #' @param ... Other parameters passed on to methods
 #' @export
 #' @rdname odbc-query
