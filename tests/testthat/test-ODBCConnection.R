@@ -1,5 +1,5 @@
 context("ODBCConnection")
-
+#Common functions
 make_test_connection <- function()
 {
   USER <- 'sa'
@@ -22,6 +22,7 @@ test_that("iris exists by dbExistsTable", {
   con <- make_test_connection()
   dbWriteTable(con, "iris", iris, overwrite=TRUE)
   expect_true(dbExistsTable(con, "iris"))
+  dbRemoveTable(con, "iris")
   dbDisconnect(con)
 })
 
@@ -29,6 +30,7 @@ test_that("iris exists by dbListTables", {
   con <- make_test_connection()
   dbWriteTable(con, "iris", iris, overwrite=TRUE)
   expect_true(tolower("iris") %in% tolower(dbListTables(con)))
+  dbRemoveTable(con, "iris")
   dbDisconnect(con)
 })
 
@@ -41,17 +43,17 @@ test_that("iris does not exists", {
 
 test_that("COlumn name should match", {
   con <- make_test_connection()
-  dbRemoveTable(con, "iris")
   dbWriteTable(con, "iris", iris, overwrite=TRUE, rownames=FALSE)
   expect_true(all(gsub("\\.", "", colnames(iris)) == dbListFields(con, "iris")))
+  dbRemoveTable(con, "iris")
   dbDisconnect(con)
 })
 
 test_that("COlumn name should match including rownames", {
   con <- make_test_connection()
-  dbRemoveTable(con, "iris")
   dbWriteTable(con, "iris", iris, overwrite=TRUE)
   expect_true(all(c("rownames", gsub("\\.", "", colnames(iris))) == dbListFields(con, "iris")))
+  dbRemoveTable(con, "iris")
   dbDisconnect(con)
 })
 
@@ -65,8 +67,14 @@ test_that("it should not behave like bringing any error", {
 
 test_that("iris table and raw iris data should be match", {
   con <- make_test_connection()
-  dbRemoveTable(con, "iris")
   dbWriteTable(con, "iris", iris, overwrite=TRUE, rownames=FALSE)
   suppressWarnings(expect_true(all(dbReadTable(con, "iris") == iris)))
+  dbRemoveTable(con, "iris")
+  dbDisconnect(con)
+})
+
+test_that("DB source name should be test", {
+  con <- make_test_connection()
+  expect_true(dbGetInfo(con)$sourcename=="test")
   dbDisconnect(con)
 })
