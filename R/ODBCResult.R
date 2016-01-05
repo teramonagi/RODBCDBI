@@ -108,6 +108,5 @@ setMethod("dbGetStatement", "ODBCResult", function(res, ...) {
 #' @rdname odbc-meta
 #' @export
 setMethod("dbGetInfo", "ODBCResult", function(dbObj, ...) {
-  # mock implementation
-  NULL
+  dbGetInfo(dbObj@connection)
 })

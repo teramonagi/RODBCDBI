@@ -31,7 +31,20 @@ setMethod("dbSendQuery", "ODBCConnection", function(conn, statement, ...) {
 #' @param dbObj An object inheriting from \code{\linkS4class{ODBCConnection}}, \code{\linkS4class{ODBCDriver}}, or a \code{\linkS4class{ODBCResult}}
 #' @export
 #' @rdname ODBCConnection-class
-setMethod("dbGetInfo", "ODBCConnection", function(dbObj, ...) {dbObj(dbObj@odbc)})
+setMethod("dbGetInfo", "ODBCConnection", function(dbObj, ...) {
+  info <- RODBC::odbcGetInfo(dbObj@odbc)
+  list(dbname = unname(info["DBMS_Name"]), 
+       db.version = unname(info["DBMS_Ver"]), 
+       username = "", 
+       host = "", 
+       port = "",
+       sourcename = unname(info["Data_Source_Name"]),
+       servername = unname(info["Server_Name"]),
+       drivername = unname(info["Driver_Name"]),
+       odbc.version = unname(info["ODBC_Ver"]),
+       driver.version = unname(info["Driver_Ver"]),
+       odbcderiver.version = unname(info["Driver_ODBC_Ver"]))
+})
 
 
 #' List fields in specified table.
