@@ -1,26 +1,50 @@
-#' ODBC driver
-#'
-#' This driver never needs to be unloaded and hence \code{dbUnload()} is a null-op.
-#'
-#' @export
-#' @import methods DBI
-#' @examples
-#' \dontrun{
-#' #' library(DBI)
-#' RODBCDBI::ODBC()
-#' }
-ODBC <- function() {new("ODBCDriver")}
-
 #' ODBCDriver and methods.
+#' 
+#' An ODBC driver implementing the R database (DBI) API.
+#' This class should always be initialized with the \code{ODBC()} function.
+#' It returns an object that allows you to connect to ODBC.
 #'
 #' @export
 #' @keywords internal
 setClass("ODBCDriver", contains = "DBIDriver")
 
-#' @export
-#' @rdname ODBCDriver-class
-setMethod("dbUnloadDriver", "ODBCDriver", function(drv, ...) {NULL})
+#' Generate an object of ODBCDriver class
+#'
+#' This driver is for implementing the R database (DBI) API.
+#' This class should always be initialized with the \code{ODBC()} function.
+#' ODBC driver does nothing for ODBC connection. It just exists for S4 class compatibility with DBI package. 
+#'
+#' @examples
+#' \dontrun{
+#' driver <- RODBCDBI::ODBC()
+#' # Connect to a ODBC data source
+#' con <- dbConnect(driver, dsn="test")
+#' # Always cleanup by disconnecting the database
+#' #' dbDisconnect(con)
+#' }
+ODBC <- function() {new("ODBCDriver")}
 
+
+#' @rdname ODBCDriver-class
+#' @export
+setMethod("dbUnloadDriver", "ODBCDriver", function(drv, ...) {TRUE})
+
+#' Connect/disconnect to a ODBC data source
+#'
+#' These methods are straight-forward implementations of the corresponding generic functions.
+#' 
+#' @param drv an object of class ODBCDriver
+#' @param dsn Data source name you defined by ODBC data source administrator tool.
+#' @param user User name to connect as.
+#' @param password Password to be used if the DSN demands password authentication.
+#' @export
+#' @examples
+#' \dontrun{
+#' # Connect to a ODBC data source
+#' con <- dbConnect(RODBCDBI::ODBC(), dsn="test")
+#' # Always cleanup by disconnecting the database
+#' #' dbDisconnect(con)
+#' }
 setMethod(
   "dbConnect", 
   "ODBCDriver", 
@@ -35,3 +59,11 @@ setMethod(
 #' @rdname ODBCDriver-class
 #' @export
 setMethod("dbIsValid", "ODBCDriver", function(dbObj) {TRUE})
+
+#' Get ODBCDriver metadata.
+#' 
+#' Nothing to do for ODBCDriver case
+#' 
+#' @rdname ODBCDriver-class
+#' @export
+setMethod("dbGetInfo", "ODBCDriver", function(dbObj, ...) {NULL})

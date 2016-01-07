@@ -18,3 +18,4 @@ Collate:
     'ODBCConnection.R'
     'ODBCDriver.R'
     'ODBCResult.R'
+RoxygenNote: 5.0.1

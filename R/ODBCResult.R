@@ -1,5 +1,6 @@
-#' ODBC results.
+#' Class ODBCResult.
 #'
+#' ODBC's query results class. This classes encapsulates the result of an SQL statement (either select or not). The main generator is dbSendQuery.
 #' @keywords internal
 #' @export
 setClass(
@@ -20,15 +21,6 @@ is_done <- function(x) {
   x
 }
 
-#' Execute a SQL statement on a database connection
-#'
-#' To retrieve results a chunk at a time, use \code{dbSendQuery},
-#' \code{dbFetch}, then \code{ClearResult}. Alternatively, if you want all the
-#' results (and they'll fit in memory) use \code{dbGetQuery} which sends,
-#' fetches and clears for you.
-#' 
-#' @param res Code a \linkS4class{ODBCResult} produced by \code{\link[DBI]{dbSendQuery}}.
-#' @param n Number of rows to return. If less than zero returns all rows.
 #' @inheritParams DBI::rownamesToColumn
 #' @export
 #' @rdname odbc-query
