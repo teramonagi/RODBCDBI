@@ -26,7 +26,6 @@ is_done <- function(x) {
 #' @rdname odbc-query
 setMethod("dbFetch", "ODBCResult", function(res, n = -1, ...) {
   result <- sqlQuery(res@connection@odbc, res@sql)
-  res
   is_done(res) <- TRUE
   result
 })
@@ -101,4 +100,20 @@ setMethod("dbGetStatement", "ODBCResult", function(res, ...) {
 #' @export
 setMethod("dbGetInfo", "ODBCResult", function(dbObj, ...) {
   dbGetInfo(dbObj@connection)
+})
+
+
+#' @export
+setMethod("dbColumnInfo", "ODBCResult", function(res, ...) {
+  df <- sqlQuery(res@connection@odbc, res@sql, max=1)
+  data_type <- sapply(df, class)
+  data.frame(
+    name=colnames(df),
+    data.type=data_type,
+    field.type=-1, #Can implement it(Data type in DBMS) through RODBC
+    len=-1,
+    precision=-1, 
+    scale=-1,
+    nullOK=sapply(df, function(x){any(is.null(x))}) #adhoc...
+  )
 })

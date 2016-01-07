@@ -14,6 +14,7 @@ setClass("ODBCDriver", contains = "DBIDriver")
 #' This class should always be initialized with the \code{ODBC()} function.
 #' ODBC driver does nothing for ODBC connection. It just exists for S4 class compatibility with DBI package. 
 #'
+#' @export
 #' @examples
 #' \dontrun{
 #' driver <- RODBCDBI::ODBC()
