@@ -3,6 +3,7 @@
 \docType{class}
 \name{ODBCDriver-class}
 \alias{ODBCDriver-class}
+\alias{dbGetInfo,ODBCDriver-method}
 \alias{dbIsValid,ODBCDriver-method}
 \alias{dbUnloadDriver,ODBCDriver-method}
 \title{ODBCDriver and methods.}
@@ -10,9 +11,15 @@
 \S4method{dbUnloadDriver}{ODBCDriver}(drv, ...)
 
 \S4method{dbIsValid}{ODBCDriver}(dbObj)
+
+\S4method{dbGetInfo}{ODBCDriver}(dbObj, ...)
 }
 \description{
-ODBCDriver and methods.
+An ODBC driver implementing the R database (DBI) API.
+This class should always be initialized with the \code{ODBC()} function.
+It returns an object that allows you to connect to ODBC.
+
+Nothing to do for ODBCDriver case
 }
 \keyword{internal}
 

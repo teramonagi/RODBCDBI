@@ -2,20 +2,22 @@
 % Please edit documentation in R/ODBCDriver.R
 \name{ODBC}
 \alias{ODBC}
-\title{Class ODBCDriver}
+\title{Generate an object of ODBCDriver class}
 \usage{
 ODBC()
 }
 \description{
 This driver is for implementing the R database (DBI) API.
-This driver never needs to be unloaded and hence \code{dbUnload()} is a null-op.
 This class should always be initialized with the \code{ODBC()} function.
 ODBC driver does nothing for ODBC connection. It just exists for S4 class compatibility with DBI package.
 }
 \examples{
 \dontrun{
-#' library(DBI)
-RODBCDBI::ODBC()
+driver <- RODBCDBI::ODBC()
+# Connect to a ODBC data source
+con <- dbConnect(driver, dsn="test")
+# Always cleanup by disconnecting the database
+#' dbDisconnect(con)
 }
 }
 
