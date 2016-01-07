@@ -12,6 +12,9 @@
 
 \item{name}{String, name of table. Match is case insensitive.}
 }
+\value{
+boolean value which indicated whether the table exists or not
+}
 \description{
 Does the table exist?
 }
