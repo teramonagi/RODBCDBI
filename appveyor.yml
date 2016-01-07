@@ -50,3 +50,7 @@ notifications:
     channel: ci
     template: "<{{buildUrl}}|Build {{projectName}} {{buildVersion}} {{status}}> Commit <{{commitUrl}}|{{commitId}}> by {{commitAuthor}} on {{commitDate}}: _{{commitMessage}}_"
 
+branches:
+  only:
+    - master
+    - production：ｗ
