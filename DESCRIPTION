@@ -1,9 +1,10 @@
 Package: RODBCDBI
 Type: Package
-Version: 0.1
+Version: 0.11
+Authors@R: c(
+  person("Nagi", "Teramo", , "teramonagi@gmail.com", c("aut", "cre")),
+  person("Shinichi", "Takayanagi", , "shinichi.takayanagi@gmail.com", "aut"))
 Title: Provides Access to Databases Through the ODBC Interface
-Author: Nagi Teramo
-Maintainer: Nagi Teramo <teramonagi@gmail.com>
 Description: An implementation of R's DBI interface using ODBC package as a
     back-end. This allows R to connect to any DBMS that has a ODBC driver.
 License: MIT + file LICENSE
