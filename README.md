@@ -14,23 +14,39 @@ devtools::install_github("teramonagi/RODBCDBI")
 ```
 
 ## Basic usage
+### Before you start
+You have to create a system data source name (DSN) to indicate which data source you want to use.
+The following links are useful to do that.
+- https://support.microsoft.com/en-us/kb/300596
+- https://drill.apache.org/docs/configuring-odbc-on-windows/
 
+### Example
 ```R
+#Load library
 library(DBI)
 library(RODBCDBI)
+
 # At first, we make a sample table using RODBC package
 con <- dbConnect(RODBCDBI::ODBC(), dsn='test')
+
+#Show table lists
 dbListTables(con)
+
+#Add new tables(iris, USArrests)
 dbWriteTable(con, "USArrests", USArrests)
-
 dbWriteTable(con, "iris", iris)
+
+#Show table again to check that the above tables are added correctly.
 dbListTables(con)
 
+#Show the columns(fields) of iris table
 dbListFields(con, "iris")
+
+#Get the entire contents of iris and USArrests tables
 dbReadTable(con, "iris")
 dbReadTable(con, "USArrests")
 
-# You can fetch all results:
+# You can fetch all results by SQL:
 res <- dbSendQuery(con, "SELECT * FROM USArrests")
 dbFetch(res)
 

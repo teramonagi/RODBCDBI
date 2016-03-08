@@ -26,3 +26,14 @@ test_that("All rows and columns should be returned", {
   dbRemoveTable(con, "iris")
   dbDisconnect(con)
 })
+
+test_that("dbColumnInfo should give the information about its result", {
+  con <- make_test_connection()
+  dbWriteTable(con, "iris", iris, overwrite=TRUE, rownames=FALSE)
+  res <- dbSendQuery(con, "SELECT * FROM iris")
+  column_info <- dbColumnInfo(res)
+  expect_true(all(sapply(iris, class)==column_info$data.type))
+  expect_true(all(gsub("\\.", "", colnames(iris))==column_info$name))
+  dbRemoveTable(con, "iris")
+  dbDisconnect(con)
+})
