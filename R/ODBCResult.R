@@ -87,7 +87,8 @@ NULL
 #' @rdname odbc-meta
 #' @export
 setMethod("dbGetRowCount", "ODBCResult", function(res, ...) {
-  unlist(dbGetQuery(res@connection, "SELECT count(*) FROM iris"))
+  df <- sqlQuery(res@connection@odbc, res@sql)
+  nrow(df)
 })
 
 #' @rdname odbc-meta

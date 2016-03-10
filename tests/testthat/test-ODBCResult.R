@@ -37,3 +37,13 @@ test_that("dbColumnInfo should give the information about its result", {
   dbRemoveTable(con, "iris")
   dbDisconnect(con)
 })
+
+test_that("dbGetRowCount function should give the ", {
+  con <- make_test_connection()
+  dbWriteTable(con, "iris", iris, overwrite=TRUE, rownames=FALSE)
+  res <- dbSendQuery(con, "SELECT * FROM iris")
+  size <- dbGetRowCount(res)
+  expect_true(size == nrow(iris))
+  dbRemoveTable(con, "iris")
+  dbDisconnect(con)
+})
