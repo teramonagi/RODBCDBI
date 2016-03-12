@@ -25,7 +25,7 @@ is_done <- function(x) {
 #' @export
 #' @rdname odbc-query
 setMethod("dbFetch", "ODBCResult", function(res, n = -1, ...) {
-  result <- sqlQuery(res@connection@odbc, res@sql)
+  result <- sqlQuery(res@connection@odbc, res@sql, max=ifelse(n==-1, 0, n))
   is_done(res) <- TRUE
   result
 })

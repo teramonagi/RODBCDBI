@@ -47,3 +47,16 @@ test_that("dbGetRowCount function should give the ", {
   dbRemoveTable(con, "iris")
   dbDisconnect(con)
 })
+
+test_that("dbFetch should return the result depending on n argument", {
+  con <- make_test_connection()
+  dbWriteTable(con, "iris", iris, overwrite=TRUE, rownames=FALSE)
+  res <- dbSendQuery(con, "SELECT * FROM iris")
+  df <- dbFetch(res, n=3)
+  expect_true(nrow(df)==3)
+  # -1 means all row
+  df <- dbFetch(res, n=-1)
+  expect_true(nrow(df)==nrow(iris))
+  dbRemoveTable(con, "iris")
+  dbDisconnect(con)
+})
