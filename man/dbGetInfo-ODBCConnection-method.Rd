@@ -9,6 +9,8 @@
 }
 \arguments{
 \item{dbObj}{An object inheriting from \code{\linkS4class{ODBCConnection}}, \code{\linkS4class{ODBCDriver}}, or a \code{\linkS4class{ODBCResult}}}
+
+\item{...}{Other parameters passed on to methods}
 }
 \description{
 Get DBMS metadata.

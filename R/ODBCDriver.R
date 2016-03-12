@@ -38,6 +38,7 @@ setMethod("dbUnloadDriver", "ODBCDriver", function(drv, ...) {TRUE})
 #' @param dsn Data source name you defined by ODBC data source administrator tool.
 #' @param user User name to connect as.
 #' @param password Password to be used if the DSN demands password authentication.
+#' @param ... Other parameters passed on to methods
 #' @export
 #' @examples
 #' \dontrun{
