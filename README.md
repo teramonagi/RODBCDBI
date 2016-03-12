@@ -49,9 +49,15 @@ dbReadTable(con, "USArrests")
 # You can fetch all results by SQL:
 res <- dbSendQuery(con, "SELECT * FROM USArrests")
 dbFetch(res)
+# ...Or indicate its size of the row.
+dbFetch(res, n=3)
 
+# If you want to know the only row size of your query, you can use dbGetRowCount
 # Or you can get all result at once by dbGetQuery
-dbGetQuery(con, "SELECT * FROM USArrests")
+dbGetRowCount(res, "SELECT * FROM USArrests")
+
+# You can get the column information of your query.(not implemented completely)
+dbColumnInfo(res)
 
 # Clear the result
 dbClearResult(res)
