@@ -19,11 +19,13 @@
 \arguments{
 \item{conn}{An existing \code{\linkS4class{ODBCConnection}}}
 
+\item{statement}{The SQL which you want to run}
+
 \item{...}{Other parameters passed on to methods}
 
-\item{res}{An existing \code{\linkS4class{ODBCResult}}}
+\item{res}{An object of class \code{\linkS4class{ODBCResult}}}
 
-\item{n}{The number of the record you want to extract. -1 means "all"}
+\item{n}{Number of rows to return. If less than zero returns all rows.}
 }
 \description{
 To retrieve results a chunk at a time, use \code{dbSendQuery},

@@ -104,6 +104,7 @@ setMethod("dbGetInfo", "ODBCResult", function(dbObj, ...) {
 })
 
 
+#' @rdname odbc-meta
 #' @export
 setMethod("dbColumnInfo", "ODBCResult", function(res, ...) {
   df <- sqlQuery(res@connection@odbc, res@sql, max=1)

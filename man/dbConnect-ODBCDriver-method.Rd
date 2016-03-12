@@ -16,6 +16,8 @@
 \item{user}{User name to connect as.}
 
 \item{password}{Password to be used if the DSN demands password authentication.}
+
+\item{...}{Other parameters passed on to methods}
 }
 \description{
 These methods are straight-forward implementations of the corresponding generic functions.

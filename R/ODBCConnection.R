@@ -20,8 +20,9 @@ setClass(
 #' fetches and clears for you.
 #' 
 #' @param conn An existing \code{\linkS4class{ODBCConnection}}
-#' @param res  An existing \code{\linkS4class{ODBCResult}}
-#' @param n The number of the record you want to extract. -1 means "all"
+#' @param statement  The SQL which you want to run
+#' @param res An object of class \code{\linkS4class{ODBCResult}}
+#' @param n Number of rows to return. If less than zero returns all rows.
 #' @param ... Other parameters passed on to methods
 #' @export
 #' @rdname odbc-query
@@ -35,6 +36,7 @@ setMethod("dbSendQuery", "ODBCConnection", function(conn, statement, ...) {
 #' Get DBMS metadata.
 #' 
 #' @param dbObj An object inheriting from \code{\linkS4class{ODBCConnection}}, \code{\linkS4class{ODBCDriver}}, or a \code{\linkS4class{ODBCResult}}
+#' @param ... Other parameters passed on to methods
 #' @export
 setMethod("dbGetInfo", "ODBCConnection", function(dbObj, ...) {
   info <- RODBC::odbcGetInfo(dbObj@odbc)

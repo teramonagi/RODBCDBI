@@ -2,6 +2,7 @@
 % Please edit documentation in R/ODBCResult.R
 \docType{methods}
 \name{odbc-meta}
+\alias{dbColumnInfo,ODBCResult-method}
 \alias{dbGetInfo,ODBCResult-method}
 \alias{dbGetRowCount,ODBCResult-method}
 \alias{dbGetStatement,ODBCResult-method}
@@ -13,6 +14,8 @@
 \S4method{dbGetStatement}{ODBCResult}(res, ...)
 
 \S4method{dbGetInfo}{ODBCResult}(dbObj, ...)
+
+\S4method{dbColumnInfo}{ODBCResult}(res, ...)
 }
 \arguments{
 \item{res}{An object of class \code{\linkS4class{ODBCResult}}}
