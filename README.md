@@ -76,4 +76,4 @@ dbDisconnect(con)
 
 ## Acknowledgements
 
-Many thanks to Brian D. Ripley, Michael Lapsley since This package is just a wrapper of [RODBC package](http://cran.r-project.org/web/packages/RODBC/index.html).
+Many thanks to Brian D. Ripley, Michael Lapsley since This package is just a wrapper of [RODBC package](https://cran.r-project.org/package=RODBC).
