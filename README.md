@@ -3,10 +3,17 @@
 RODBCDBI is an DBI-compliant interface to ODBC database. It's a wrapper of RODBC package.
 
 ## Installation
+RODBCDBI is available from CRAN.
+In addition to that, you can get it from github with:
 
-RODBCDBI isn't available from CRAN yet, but you can get it from github with:
-
+### From CRAN
 ```R
+install.packages("RODBCDBI")
+```
+
+### From Github
+```R
+# If you do not have devtools package
 # install.packages("devtools")
 install.packages("RODBC")
 devtools::install_github("rstats-db/DBI")
