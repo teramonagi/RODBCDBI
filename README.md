@@ -1,4 +1,4 @@
-# RODBCDBI [![Build status](https://ci.appveyor.com/api/projects/status/3h11jwc1v7l7nt38/branch/master?svg=true)](https://ci.appveyor.com/project/teramonagi/rodbcdbi/branch/master) [![CRAN Version](http://www.r-pkg.org/badges/version/RODBCDBI)](http://cran.rstudio.com/web/packages/RODBCDBI)
+# RODBCDBI [![Build status](https://ci.appveyor.com/api/projects/status/3h11jwc1v7l7nt38/branch/master?svg=true)](https://ci.appveyor.com/project/teramonagi/rodbcdbi/branch/master) [![CRAN Version](http://www.r-pkg.org/badges/version/RODBCDBI)](http://cran.rstudio.com/web/packages/RODBCDBI) http://cranlogs.r-pkg.org/badges/grand-total/RODBCDBI
 
 RODBCDBI is an DBI-compliant interface to ODBC database. It's a wrapper of RODBC package.
 
