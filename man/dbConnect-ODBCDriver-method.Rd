@@ -6,7 +6,7 @@
 \title{Connect/disconnect to a ODBC data source}
 \usage{
 \S4method{dbConnect}{ODBCDriver}(drv, dsn, user = NULL, password = NULL,
-  ...)
+  connection, ...)
 }
 \arguments{
 \item{drv}{an object of class ODBCDriver}
@@ -17,6 +17,8 @@
 
 \item{password}{Password to be used if the DSN demands password authentication.}
 
+\item{connection}{Connection string to use to connect to the ODBC database server (as per \code{odbcDriverConnect}, e.g. 'driver={SQL Server};server=mysqlhost;database=mydbname;trusted_connection=true')}
+
 \item{...}{Other parameters passed on to methods}
 }
 \description{
@@ -26,6 +28,10 @@ These methods are straight-forward implementations of the corresponding generic 
 \dontrun{
 # Connect to a ODBC data source
 con <- dbConnect(RODBCDBI::ODBC(), dsn="test")
+# or using a connection string
+con <- dbConnect(RODBCDBI::ODBC(),
+  connection="driver={SQL Server};server=mysqlhost;
+  database=mydbname;trusted_connection=true")
 # Always cleanup by disconnecting the database
 #' dbDisconnect(con)
 }
