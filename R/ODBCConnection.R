@@ -50,7 +50,7 @@ setMethod("dbGetInfo", "ODBCConnection", function(dbObj, ...) {
        drivername = unname(info["Driver_Name"]),
        odbc.version = unname(info["ODBC_Ver"]),
        driver.version = unname(info["Driver_Ver"]),
-       odbcderiver.version = unname(info["Driver_ODBC_Ver"]))
+       odbcdriver.version = unname(info["Driver_ODBC_Ver"]))
 })
 
 
